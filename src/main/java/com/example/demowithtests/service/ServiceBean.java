@@ -45,6 +45,7 @@ public class ServiceBean implements Service {
                     entity.setName(employee.getName());
                     entity.setEmail(employee.getEmail());
                     entity.setCountry(employee.getCountry());
+                    entity.setUpdated(true);
                     return repository.save(entity);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
@@ -56,7 +57,7 @@ public class ServiceBean implements Service {
         Employee employee = repository.findById(id)
                // .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
                 .orElseThrow(ResourceWasDeletedException::new);
-        //employee.setIsDeleted(true);
+        employee.setDeleted(true);
         repository.delete(employee);
         //repository.save(employee);
     }

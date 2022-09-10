@@ -20,6 +20,25 @@ public class Employee {
     private String name;
     private String country;
     private String email;
+    private Boolean isUpdated;
+
+    public Boolean getUpdated() {
+        return isUpdated;
+    }
+
+    public void setUpdated(Boolean updated) {
+        isUpdated = updated;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    private Boolean isDeleted;
 
     public Integer getId() {
         return id;
