@@ -18,4 +18,5 @@ public interface Service {
 
     void removeAll();
 
+    List <Employee> find (String name);
 }

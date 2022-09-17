@@ -67,4 +67,8 @@ public class ServiceBean implements Service {
         repository.deleteAll();
 
     }
+
+    public List <Employee> find (String name){
+        return repository.find(name);
+    }
 }

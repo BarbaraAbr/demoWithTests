@@ -60,4 +60,10 @@ public class Controller {
     public void removeAllUsers() {
         service.removeAll();
     }
+
+    @GetMapping (value = "/users", params = {"name"})
+    @ResponseStatus(HttpStatus.OK)
+    public List <Employee> find (@RequestParam (value = "name") String name) {
+        return service.find(name);
+    }
 }
