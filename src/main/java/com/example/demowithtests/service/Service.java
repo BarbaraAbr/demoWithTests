@@ -19,4 +19,6 @@ public interface Service {
     void removeAll();
 
     List <Employee> find (String name);
+
+    List <Employee> findByCountry (String country);
 }

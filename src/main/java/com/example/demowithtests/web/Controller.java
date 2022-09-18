@@ -66,4 +66,10 @@ public class Controller {
     public List <Employee> find (@RequestParam (value = "name") String name) {
         return service.find(name);
     }
+
+    @GetMapping (value = "/users", params = {"country"})
+    @ResponseStatus(HttpStatus.OK)
+    public List <Employee> findByCountry (@RequestParam (value = "country") String country) {
+        return service.findByCountry(country);
+    }
 }

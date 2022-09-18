@@ -15,4 +15,7 @@ public interface Repository extends JpaRepository<Employee, Integer> {
 
     @Query(value = "Select * from users where name = ?1", nativeQuery = true)
     List<Employee> find (String name);
+
+    @Query(value = "Select * from users where country = ?1", nativeQuery = true)
+    List<Employee> finByCountry (String country);
 }

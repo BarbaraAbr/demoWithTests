@@ -71,4 +71,8 @@ public class ServiceBean implements Service {
     public List <Employee> find (String name){
         return repository.find(name);
     }
+
+    public List <Employee> findByCountry (String country) {
+        return repository.finByCountry(country);
+    };
 }
