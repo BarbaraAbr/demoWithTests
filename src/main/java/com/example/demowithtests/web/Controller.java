@@ -61,15 +61,33 @@ public class Controller {
         service.removeAll();
     }
 
-    @GetMapping (value = "/users", params = {"name"})
+    //PARAMS
+    @GetMapping(value = "/users", params = {"name"})
     @ResponseStatus(HttpStatus.OK)
-    public List <Employee> find (@RequestParam (value = "name") String name) {
+    public List<Employee> find(@RequestParam(value = "name") String name) {
         return service.find(name);
     }
 
-    @GetMapping (value = "/users", params = {"country"})
+    //PARAMS
+    @GetMapping(value = "/users", params = {"country"})
     @ResponseStatus(HttpStatus.OK)
-    public List <Employee> findByCountry (@RequestParam (value = "country") String country) {
+    public List<Employee> findByCountry(@RequestParam(value = "country") String country) {
         return service.findByCountry(country);
+    }
+
+    //PARAMS
+    @GetMapping(value = "/users", params = {"email"})
+    @ResponseStatus(HttpStatus.OK)
+    public Employee getOneByEmail(@RequestParam(value = "email") String email) {
+
+        return service.getOneByEmail(email);
+    }
+
+    //BODY
+    @PutMapping("/users/{email}")
+    @ResponseStatus(HttpStatus.OK)
+    public Employee refreshEmail(@PathVariable("email") String email, @RequestBody Employee employee) {
+
+        return service.updateEmail(email, employee);
     }
 }

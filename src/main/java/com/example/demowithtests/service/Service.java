@@ -21,4 +21,8 @@ public interface Service {
     List <Employee> find (String name);
 
     List <Employee> findByCountry (String country);
+
+    Employee getOneByEmail (String email);
+
+    Employee updateEmail (String email, Employee employee);
 }

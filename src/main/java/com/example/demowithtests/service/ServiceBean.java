@@ -73,6 +73,14 @@ public class ServiceBean implements Service {
     }
 
     public List <Employee> findByCountry (String country) {
-        return repository.finByCountry(country);
-    };
+        return repository.findByCountry(country);
+    }
+
+    public Employee getOneByEmail (String email){
+       return repository.getOneByEmail(email);
+    }
+
+    public Employee updateEmail (String email, Employee employee) {
+        return repository.updateEmail(email, employee);
+    }
 }
