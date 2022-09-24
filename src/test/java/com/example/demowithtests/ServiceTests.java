@@ -4,6 +4,7 @@ import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.repository.Repository;
 import com.example.demowithtests.service.Service;
 import com.example.demowithtests.service.ServiceBean;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -55,13 +56,27 @@ public class ServiceTests {
         verify(repository).findById(employee.getId());
     }
 
+    @Ignore
     @Test(expected = EntityNotFoundException.class)
     public void should_throw_exception_when_employee_doesnt_exist() {
-        Employee employee = new Employee();
+       Employee employee = new Employee();
         employee.setId(89);
         employee.setName("Mark");
 
         given(repository.findById(anyInt())).willReturn(Optional.empty());
         service.getById(employee.getId());
+    }
+
+    @Test
+    public void whenEmail_shouldReturnEmployee() {
+        Employee employee = new Employee();
+        employee.setEmail("c");
+
+        when(repository.save(ArgumentMatchers.any(Employee.class))).thenReturn(employee);
+
+        Employee created = service.create(employee);
+
+        assertThat(created.getEmail()).isSameAs(employee.getEmail());
+        verify(repository).save(employee);
     }
 }

@@ -53,6 +53,7 @@ public class RepositoryTests {
 
     }
 
+
     @Test
     @Order(4)
     @Rollback(value = false)
@@ -88,5 +89,60 @@ public class RepositoryTests {
 
         Assertions.assertThat(employee1).isNull();
     }
+
+    @Test
+    @Order(6)
+    public void findTest() {
+
+        Employee employee = new Employee();
+        employee.setName("A");
+        repository.save(employee);
+
+        Assertions.assertThat(employee.getName()).isEqualTo("A");
+
+    }
+
+    @Test
+    @Order(7)
+    public void findByCountryTest() {
+
+        Employee employee = new Employee();
+        employee.setCountry("USA");
+                repository.findByCountry("USA");
+
+        Assertions.assertThat(employee.getCountry()).isEqualTo("USA");
+
+    }
+
+    @Test
+    @Order(8)
+    public void getOneByEmailTest() {
+
+        Employee employee = new Employee();
+        employee.setEmail("a");
+        repository.getOneByEmail("a");
+
+        Assertions.assertThat(employee.getEmail()).isEqualTo("a");
+
+    }
+
+    @Test
+    @Order(9)
+    @Rollback(value = false)
+    public void updateEmailTest() {
+
+        Employee employee = Employee.builder().name("Mark").country("England").email("a").build();
+
+        repository.save(employee);
+
+        repository.getOneByEmail("a");
+
+        employee.setEmail("b");
+        Employee employeeUpdated = repository.save(employee);
+
+        Assertions.assertThat(employeeUpdated.getEmail()).isEqualTo("b");
+
+    }
+
 
 }
