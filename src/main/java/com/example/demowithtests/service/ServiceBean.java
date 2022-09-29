@@ -6,8 +6,13 @@ import com.example.demowithtests.util.ResourceNotFoundException;
 import com.example.demowithtests.util.ResourceWasDeletedException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,6 +32,13 @@ public class ServiceBean implements Service {
         return repository.findAll();
     }
 
+    @Override
+    public Page<Employee> getAllWithPagination(Pageable pageable) {
+        log.debug("getAllWithPagination() - start: pageable = {}", pageable);
+        Page<Employee> list = repository.findAll(pageable);
+        log.debug("getAllWithPagination() - end: list = {}", list);
+        return list;
+    }
     @Override
     public Employee getById(Integer id) {
         Employee employee = repository.findById(id)
@@ -66,6 +78,28 @@ public class ServiceBean implements Service {
     public void removeAll() {
         repository.deleteAll();
 
+    }
+
+    @Override
+    public Page<Employee> findByCountryContaining(String country, int page, int size, List<String> sortList, String sortOrder) {
+        // create Pageable object using the page, size and sort details
+        Pageable pageable = PageRequest.of(page, size, Sort.by(createSortOrder(sortList, sortOrder)));
+        // fetch the page object by additionally passing pageable with the filters
+        return repository.findByCountryContaining(country, pageable);
+    }
+
+    private List<Sort.Order> createSortOrder(List<String> sortList, String sortDirection) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        Sort.Direction direction;
+        for (String sort : sortList) {
+            if (sortDirection != null) {
+                direction = Sort.Direction.fromString(sortDirection);
+            } else {
+                direction = Sort.Direction.DESC;
+            }
+            sorts.add(new Sort.Order(direction, sort));
+        }
+        return sorts;
     }
 
     public List <Employee> find (String name){

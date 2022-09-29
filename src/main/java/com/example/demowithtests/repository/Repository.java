@@ -1,6 +1,8 @@
 package com.example.demowithtests.repository;
 
 import com.example.demowithtests.domain.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 public interface Repository extends JpaRepository<Employee, Integer> {
 
     Employee findByName(String name);
+
+    Page<Employee> findByCountryContaining(String country, Pageable pageable);
 
     //SQL
     @Query(value = "Select * from users where name = ?1", nativeQuery = true)
