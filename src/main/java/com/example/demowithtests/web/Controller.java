@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -153,5 +154,17 @@ public class Controller {
         //Pageable paging = PageRequest.of(page, size);
         //Pageable paging = PageRequest.of(page, size, Sort.by("name").ascending());
         return service.findByCountryContaining(country, page, size, sortList, sortOrder.toString());
+    }
+
+    @GetMapping(value = "/users/email")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Employee> getEmployeeByEmail(@RequestParam String partOfEmail,
+                                             @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "5") int size,
+                                             @RequestParam(defaultValue = "") List<String> sortList,
+                                             @RequestParam(defaultValue = "DESC") Sort.Direction sortOrder)
+    {
+        log.info("start");
+        return service.findEmployeeByEmailEndsWith(partOfEmail, page, size, sortList, sortOrder.toString());
     }
 }

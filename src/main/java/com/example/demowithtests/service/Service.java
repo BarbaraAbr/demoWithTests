@@ -40,4 +40,6 @@ public interface Service {
     Employee getOneByEmail (String email);
 
     Employee updateEmail (String email, Employee employee);
+
+    Page <Employee> findEmployeeByEmailEndsWith (String partOfEmail, int page, int size, List<String> sortList, String sortOrder);
 }

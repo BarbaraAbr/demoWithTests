@@ -117,4 +117,10 @@ public class ServiceBean implements Service {
     public Employee updateEmail (String email, Employee employee) {
         return repository.updateEmail(email, employee);
     }
+
+    @Override
+    public Page<Employee> findEmployeeByEmailEndsWith(String partOfEmail, int page, int size, List<String> sortList, String sortOrder) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(createSortOrder(sortList, sortOrder)));
+        return repository.findEmployeeByEmailEndsWith(partOfEmail, pageable);
+    }
 }
