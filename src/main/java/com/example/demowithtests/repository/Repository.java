@@ -17,6 +17,8 @@ public interface Repository extends JpaRepository<Employee, Integer> {
 
     Employee findByName(String name);
 
+    List <Employee> findEmployeesByCountry(String country);
+
     Page<Employee> findByCountryContaining(String country, Pageable pageable);
 
     @NotNull

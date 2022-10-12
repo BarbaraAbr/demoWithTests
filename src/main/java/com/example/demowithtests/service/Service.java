@@ -42,4 +42,8 @@ public interface Service {
     Employee updateEmail (String email, Employee employee);
 
     Page <Employee> findEmployeeByEmailEndsWith (String partOfEmail, int page, int size, List<String> sortList, String sortOrder);
+
+    List <Employee> getEmployeesByCountry (String country);
+
+    List <Employee> getEmployeesByCountryContaining ();
 }

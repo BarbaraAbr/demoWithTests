@@ -7,6 +7,8 @@ import com.example.demowithtests.dto.EmployeeUpdateDto;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class EmployeeConverter {
     private final MapperFacade mapperFacade;
@@ -21,6 +23,10 @@ public class EmployeeConverter {
 
     public EmployeeSaveDto toDto(Employee entity) {
         return mapperFacade.map(entity, EmployeeSaveDto.class);
+    }
+
+    public List <EmployeeReadDto> toDtoList (List<Employee> list) {
+        return mapperFacade.mapAsList(list, EmployeeReadDto.class);
     }
 
     public EmployeeReadDto toReadDto(Employee entity) {

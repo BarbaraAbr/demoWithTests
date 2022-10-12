@@ -167,4 +167,21 @@ public class Controller {
         log.info("start");
         return service.findEmployeeByEmailEndsWith(partOfEmail, page, size, sortList, sortOrder.toString());
     }
+
+    @GetMapping(value = "/users/{country}/s")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EmployeeReadDto> getEmployeesByCountry(@PathVariable String country) {
+        var e = service.getEmployeesByCountry(country);
+        var dto = converter.toDtoList(e);
+        return dto;
+        //return service.getEmployeesByCountry(country);
+    }
+
+        @GetMapping(value = "/users/country/st")
+        @ResponseStatus(HttpStatus.OK)
+        public List<EmployeeReadDto> getEmployeesByCountryContainsJ () {
+            var e = service.getEmployeesByCountryContaining();
+            var dto = converter.toDtoList(e);
+            return dto;
+    }
 }

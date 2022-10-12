@@ -13,7 +13,10 @@ import org.springframework.data.domain.Sort;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j
@@ -122,5 +125,20 @@ public class ServiceBean implements Service {
     public Page<Employee> findEmployeeByEmailEndsWith(String partOfEmail, int page, int size, List<String> sortList, String sortOrder) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(createSortOrder(sortList, sortOrder)));
         return repository.findEmployeeByEmailEndsWith(partOfEmail, pageable);
+    }
+
+    @Override
+    public List<Employee> getEmployeesByCountry(String country) {
+        return repository.findEmployeesByCountry(country).stream()
+                .filter(employee -> employee.getCountry().length() < 12)
+                .sorted(Comparator.comparing(Employee::getCountry))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Employee> getEmployeesByCountryContaining() {
+        return repository.findAll().stream()
+                .filter(employee -> employee.getCountry().contains("J"))
+                .collect(Collectors.toList());
     }
 }
