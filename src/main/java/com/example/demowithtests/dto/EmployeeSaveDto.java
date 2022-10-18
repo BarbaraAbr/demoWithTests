@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmployeeSaveDto {
     public Integer id;
@@ -21,5 +23,9 @@ public class EmployeeSaveDto {
     @NotNull
     @Schema(description = "Email address of an employee.", example = "billys@mail.com", required = true)
     public String email;
+
+    public Set<AddressDto> addresses = new HashSet<>();
+
+    public DocumentDto document;
 }
 

@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmployeeReadDto {
     @NotNull(message = "Name may not be null")
@@ -20,6 +22,10 @@ public class EmployeeReadDto {
     @Email
     @NotNull
     public String email;
+
+    public Set<AddressDto> addresses = new HashSet<>();
+
+    public DocumentDto document;
 
     public Date date = Date.from(Instant.now());
 }
