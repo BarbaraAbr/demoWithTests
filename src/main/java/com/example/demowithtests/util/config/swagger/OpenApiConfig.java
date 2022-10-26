@@ -30,7 +30,7 @@ public class OpenApiConfig {
                 .components(new Components())
                 .info(new Info().title("Application Employee API")
                         .description(" Spring Boot REST service uses OpenAPI 3.")
-                        .version("v0.0.1"));
+                        .version("v0.0.V1__init.sql"));
 //    @Bean
 //    public OpenAPI customApi(@Value("${application-description}")String appDescription,
 //                                 @Value("${application-version}")String appVersion) {

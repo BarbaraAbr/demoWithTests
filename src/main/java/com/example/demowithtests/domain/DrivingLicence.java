@@ -17,8 +17,8 @@ public class DrivingLicence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column (name = "number")
-    private Long number;
+    @Column (name = "number_card")
+    private Long numberCard;
 
     @Column (name = "date_of_birth")
     private String dateOfBirth;

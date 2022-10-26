@@ -1,0 +1,1 @@
+alter table passport add record_number character varying;

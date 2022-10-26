@@ -16,8 +16,8 @@ public class StudentCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column (name = "number")
-    private Long number;
+    @Column (name = "number_card")
+    private Long numberCard;
 
     @Column (name = "university")
     private String university;

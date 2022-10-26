@@ -3,6 +3,8 @@ package com.example.demowithtests.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,4 +43,5 @@ public class Document {
     @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn (name = "student_card_id")
     private InternationalPassport studentCard;
+
 }

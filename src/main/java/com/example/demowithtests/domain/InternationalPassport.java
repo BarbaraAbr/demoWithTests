@@ -16,8 +16,8 @@ public class InternationalPassport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column (name = "number")
-    private String number;
+    @Column (name = "number_card")
+    private String numberCard;
 
     @Column (name = "gender")
     private String gender;
