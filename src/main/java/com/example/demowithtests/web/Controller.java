@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,6 +44,7 @@ public class Controller {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found."),
             @ApiResponse(responseCode = "409", description = "Employee already exists")})
+    @PreAuthorize("hasAuthority('users:post')")
     public EmployeeSaveDto saveEmployee(@RequestBody @Valid EmployeeSaveDto requestForSave) {
         var employee = converter.getMapperFacade().map(requestForSave, Employee.class);
         var dto = converter.toDto(service.create(employee));
@@ -53,12 +55,14 @@ public class Controller {
     //Получение списка юзеров
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public List<Employee> getAllUsers() {
         return service.getAll();
     }
 
     @GetMapping("/users/p")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public Page<Employee> getPage(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "5") int size
     ) {
@@ -75,6 +79,7 @@ public class Controller {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found."),
             @ApiResponse(responseCode = "409", description = "Employee already exists")})
+    @PreAuthorize("hasAuthority('users:get')")
     public EmployeeReadDto getEmployeeById(@PathVariable Integer id) {
         log.debug("getEmployeeById() Controller - start: id = {}", id);
         var employee = service.getById(id);
@@ -93,6 +98,7 @@ public class Controller {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found."),
             @ApiResponse(responseCode = "409", description = "Employee already exists")})
+    @PreAuthorize("hasAuthority('users:put')")
     public EmployeeUpdateDto refreshEmployee(@PathVariable("id") Integer id, @RequestBody Employee employee) {
         var e = service.updateById(id, employee);
 
@@ -103,6 +109,7 @@ public class Controller {
     //Удаление по id
     @PatchMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('users:patch')")
     public void removeEmployeeById(@PathVariable Integer id) {
         service.removeById(id);
     }
@@ -110,6 +117,7 @@ public class Controller {
     //Удаление всех юзеров
     @DeleteMapping("/users")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('users:delete')")
     public void removeAllUsers() {
         service.removeAll();
     }
@@ -117,6 +125,7 @@ public class Controller {
     //PARAMS
     @GetMapping(value = "/users", params = {"name"})
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public List<Employee> find(@RequestParam(value = "name") String name) {
         return service.find(name);
     }
@@ -124,6 +133,7 @@ public class Controller {
     //PARAMS
     @GetMapping(value = "/users", params = {"country"})
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public List<Employee> findByCountry(@RequestParam(value = "country") String country) {
         return service.findByCountry(country);
     }
@@ -131,6 +141,7 @@ public class Controller {
     //PARAMS
     @GetMapping(value = "/users", params = {"email"})
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public Employee getOneByEmail(@RequestParam(value = "email") String email) {
 
         return service.getOneByEmail(email);
@@ -139,6 +150,7 @@ public class Controller {
     //BODY
     @PutMapping("/users/{email}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:put')")
     public Employee refreshEmail(@PathVariable("email") String email, @RequestBody Employee employee) {
 
         return service.updateEmail(email, employee);
@@ -146,6 +158,7 @@ public class Controller {
 
     @GetMapping("/users/country")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public Page<Employee> findByCountry(@RequestParam(required = false) String country,
                                         @RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "3") int size,
@@ -158,6 +171,7 @@ public class Controller {
 
     @GetMapping(value = "/users/email")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public Page<Employee> getEmployeeByEmail(@RequestParam String partOfEmail,
                                              @RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "5") int size,
@@ -170,6 +184,7 @@ public class Controller {
 
     @GetMapping(value = "/users/{country}/s")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('users:get')")
     public List<EmployeeReadDto> getEmployeesByCountry(@PathVariable String country) {
         var e = service.getEmployeesByCountry(country);
         var dto = converter.toDtoList(e);
@@ -179,6 +194,7 @@ public class Controller {
 
         @GetMapping(value = "/users/country/st")
         @ResponseStatus(HttpStatus.OK)
+        @PreAuthorize("hasAuthority('users:get')")
         public List<EmployeeReadDto> getEmployeesByCountryContainsJ () {
             var e = service.getEmployeesByCountryContaining();
             var dto = converter.toDtoList(e);
